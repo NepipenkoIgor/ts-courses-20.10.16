@@ -6,12 +6,14 @@
 // }
 
 // let a:number = 1;
-//
+
 // let b:string;
-//
+
 // b='hi TS';
-//
+
 // let c = true;
+
+
 
 // interface SomeInt{}
 //
