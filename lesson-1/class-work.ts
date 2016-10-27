@@ -154,12 +154,21 @@
 // interface A {
 //     a: string;
 //     b: number;
+//     e:boolean;
 // }
 // interface B {
 //     a: number;
 //     b: number;
-//     c: number
+//     c: number;
 // }
+//
+// let e = {};
+// let c:A|B  = {a:2,b:2,c:2};
+
+// function a(){
+//     return true;
+// }
+
 //
 // let c: A|B  = {b:2,a:2};
 // c.a = 2;
