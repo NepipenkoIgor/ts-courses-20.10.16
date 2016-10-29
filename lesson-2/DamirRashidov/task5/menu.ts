@@ -80,20 +80,71 @@ class Menu {
 }
 
 class ImprovedMenu extends Menu {
+    private selectedLi: HTMLLIElement;
+
+    public constructor(opt: menuOpt) {
+        super(opt);
+
+        this.generateButtons();
+    }
+
+    private generateButtons(): void {
+        let div = document.createElement('div');
+
+        let input = document.createElement('input');
+        input.value = 'ul li';
+
+        let updateSelectedLi = () => {
+            this.selectedLi = document.querySelector(input.value) as HTMLLIElement;
+        };
+
+        updateSelectedLi();
+
+        input.addEventListener('change', updateSelectedLi);
+        div.appendChild(input);
+
+        let buttonToggle = document.createElement('button');
+        buttonToggle.innerText = 'Toggle';
+        buttonToggle.addEventListener('click', () => {
+            this.toggle();
+        });
+        div.appendChild(buttonToggle);
+
+        let buttonOpen = document.createElement('button');
+        buttonOpen.innerText = 'Open';
+        buttonOpen.addEventListener('click', () => {
+            this.open();
+        });
+        div.appendChild(buttonOpen);
+
+        let buttonClose = document.createElement('button');
+        buttonClose.innerText = 'Close';
+        buttonClose.addEventListener('click', () => {
+            this.close();
+        });
+        div.appendChild(buttonClose);
+
+        this.element.insertBefore(div, this.element.children[0]);
+    }
+
     public getElem(): HTMLElement {
         return this.element;
     }
 
     public toggle(): void {
-
+        this.selectedLi.classList.toggle('menu-open');
     }
 
     public close(): void {
-
+        if (this.selectedLi.classList.contains('menu-open')) {
+            this.selectedLi.classList.remove('menu-open');
+        }
     }
 
-    public  open(): void {
-
+    public open(): void {
+        if (!this.selectedLi.classList.contains('menu-open')) {
+            this.selectedLi.classList.add('menu-open');
+        }
     }
 }
 
