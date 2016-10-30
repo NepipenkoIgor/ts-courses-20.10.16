@@ -59,7 +59,7 @@ class Menu {
         let classList = el.classList;
         if (classList.contains('title')) {
             let parentLi = el.parentNode as HTMLLIElement;
-            parentLi.classList.toggle('menu-open')
+            parentLi.classList.toggle('menu-open');
         }
     }
 
@@ -72,9 +72,9 @@ class Menu {
                 z += `</li>`;
                 continue;
             }
-            z += `${this.generateMenu(a.items)}</li>`
+            z += `${this.generateMenu(a.items)}</li>`;
         }
-        return `${z}</ul>`
+        return `${z}</ul>`;
     }
 }
 
