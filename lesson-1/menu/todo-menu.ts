@@ -1,6 +1,6 @@
 type menuList ={title: string, items: string[]}[];
 
-let menuList: menuList = [
+var menuList: menuList = [
     {title: 'JavaScript', items: ['React', 'Angular2', 'Cycle.js']},
     {title: 'Dart', items: ['Flutter', 'Angular2', 'Polymer']},
 ];
