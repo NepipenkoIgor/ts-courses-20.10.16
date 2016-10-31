@@ -18,28 +18,29 @@ function isString(a):a is string{
 }
 
 function summator1(...args: (number | string)[]): number {
-  let res;
+  let res:number;
   
   // если написать
   // let res: number - не работает, почему?
-  
-  res = args.reduce( (sum: number, currentArg: number | string): number => {
+  res = args.reduce<number>( (sum: number, currentArg: number | string): number => {
     let argAsNumber: number;
   
     argAsNumber = isString(currentArg) ? parseInt(currentArg, 10) : currentArg;
 
     return sum + argAsNumber;
-  });
+  },0);
 
   return res;
 }
 
+
+/**why ???*/
 function summator2(...args: (number|string)[]): number {
   let res: number = 0;
 
   for( let i = 0; i < args.length; i++) {
     
-    res += isString(args[i]) ? parseInt(<string>args[i], 10) : <number>args[i];
+    res += isString(args[i]) ? parseInt(args[i], 10) : args[i];
     // почему не работает без явного указания что args[i] строка?
   }
 

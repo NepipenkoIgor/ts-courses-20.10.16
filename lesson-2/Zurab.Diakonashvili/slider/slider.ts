@@ -42,7 +42,7 @@ class Slider {
         document.onmouseup = () => {} /* null - так ошибка */;
     }
 
-    private onDragStart() {
+    private onDragStart():boolean {
         return false;
     }
 
