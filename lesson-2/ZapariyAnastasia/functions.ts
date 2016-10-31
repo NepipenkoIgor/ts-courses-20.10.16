@@ -74,16 +74,13 @@ let ar3 = [false, false, true, undefined, true];
 function reverseLettersInSentence(sentence: string):string {
   let wordArray = sentence.split(' ');
   let reversedWordArray = [];
-  let reversedSentence: string;
   
   for (let i = 0; i < wordArray.length; i++) {
     let reversedWord = reverseLettersInWord(wordArray[i]);
     reversedWordArray.push(reversedWord);
   }
   
-  reversedSentence = reversedWordArray.join(' ');
-  
-  return reversedSentence;
+  return reversedWordArray.join(' ');
 }
 
 function reverseLettersInWord(word: string): string {
@@ -98,9 +95,9 @@ function reverseLettersInWord(word: string): string {
       i++;
       j--;
     } else if (!isLetter(word[i])) {
-      j--;
-    } else if (!isLetter(word[j])) {
       i++;
+    } else if (!isLetter(word[j])) {
+      j--;
     }
   }
   
@@ -108,13 +105,7 @@ function reverseLettersInWord(word: string): string {
 }
 
 function isLetter(char: string): boolean {
-  let charCode = char.charCodeAt(0);
-  
-  if (charCode >= 60 && charCode <= 90 || charCode >= 97 && charCode <= 122) {
-    return true;
-  }
-  
-  return false;
+  return /[a-zA-Z]/i.test(char);
 }
 
 console.log(reverseLettersInSentence('s1tar3t 2 hellow'));     // ->  t1rat3s 2 wolleh
