@@ -41,29 +41,27 @@
 // }
 // console.log(getAverage(2,3,2,4,5,6,43,3,100));
 
-function isString(a):a is string{
-    if(typeof a === 'string'){
-       return true;
-    }
-    return false;
-}
-
-
-function isNumber(a):a is number{
-    if(typeof a === 'number'){
-        return true;
-    }
-    return false;
-}
-
-//function getAverage(a:string,b:string,c:string):string; // 1
-//function getAverage(a:number,b:number,c:number):string; // 2
+// function isString(a):a is string{
+//     if(typeof a === 'string'){
+//        return true;
+//     }
+//     return false;
+// }
+//
+//
+// function isNumber(a):a is number{
+//     if(typeof a === 'number'){
+//         return true;
+//     }
+//     return false;
+// }
+//
+// function getAverage(a:string,b:string,c:string):string; // 1
+// function getAverage(a:number,b:number,c:number):string; // 2
 // function getAverage(a:string|number,b:string|number,c:string|number):string{
 //
-//     let a1: number;
-//
 //     if(isString(a)){
-//         a1 = parseInt(a,10)
+//         parseInt(a,10)
 //         // я строка
 //     }
 //     //я не строка
@@ -186,24 +184,24 @@ function isNumber(a):a is number{
 //     }
 // }
 
-// interface Stock {
-//     description: string;
-// }
-//
-// class StockItem implements Stock {
-//     constructor(private _price: number, public description: string) {
-//     }
-//
-//     public get stockItemPrice(): string {
-//         return this.description;
-//     }
-//
-//     public set stockItemPrice(newPrice: string) {
-//         this.description = newPrice;
-//     }
-// }
-//
-// let item = new StockItem(12, 'asdasdsa');
-// console.log(item.stockItemPrice);
-// item.stockItemPrice = 'asd';
-// console.log(item.stockItemPrice);
+interface Stock {
+    description: string;
+}
+
+class StockItem implements Stock {
+    constructor(private _price: number, public description: string) {
+    }
+
+    public get stockItemPrice(): string {
+        return this.description;
+    }
+
+    public set stockItemPrice(newPrice: string) {
+        this.description = newPrice;
+    }
+}
+
+let item = new StockItem(12, 'asdasdsa');
+console.log(item.stockItemPrice);
+item.stockItemPrice = 'asd';
+console.log(item.stockItemPrice);
