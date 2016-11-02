@@ -36,7 +36,7 @@ let list:typeList = [
     ]
     },
     {
-       title: 'Птицы', items: [
+        title: 'Птицы', items: [
         {
             title: 'Ворон'
         },
@@ -47,38 +47,40 @@ let list:typeList = [
     }
    ]
 
-function generateMenu (list:typeList, parent:HTMLElement, deep:number = 1):void {
+function generateMenu (list?:typeList):string {
 
-  let ul:HTMLElement = document.createElement('ul');
-  parent.appendChild(ul);
+  if (!list) {
+      return "";
+  }
 
   let arr = list;
-  for (let i:number = 0; i < arr.length; i++) {
+  let z:string = `<ul>`;
 
-    // создаем элементы
-    let li:HTMLElement = document.createElement('li');
-    // li.className = "menu-open";
-    li.innerHTML = `${arr[i].title}`;
-    ul.appendChild(li);
+  for (let i of arr) {
 
-    // вложенные данные
-    if(Array.isArray(arr[i].items)) {
-      li.innerHTML = `<a class="title">${arr[i].title}</a>`;
-      deep++;
-      let arr2 = arr[i].items;
-
-      generateMenu(arr2, li, deep);
-
-      deep--;
+    let isItemsTitle:string = "";
+    if (i.items) {
+      isItemsTitle = `<a class="title">${i.title}</a>`;
+    } else {
+      isItemsTitle = `${i.title}`;
     }
 
+    z += `<li>${isItemsTitle}`;
+
+    // вложенные данные
+    if(i.items) {
+      z += generateMenu(i.items);
+    }
+    z += `</li>`
   }
+  z += `</ul>`
+  return z;
 
 }
 
-var navMenuList:Element = document.querySelector('.menu');
-generateMenu(list, navMenuList, 1);
-navMenuList.onclick = function (ev:MouseEvent) {
+let navMenuList:Element = document.querySelector('.menu');
+navMenuList.innerHTML = generateMenu(list);
+navMenuList.onclick = (ev:MouseEvent) => {
     var el = <HTMLAnchorElement>ev.target;
     var classList:DOMTokenList = el.classList;
     if (classList.contains('title')) {
