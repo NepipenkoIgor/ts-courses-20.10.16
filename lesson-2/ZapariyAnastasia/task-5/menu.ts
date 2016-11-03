@@ -126,7 +126,7 @@ class Menu implements IMenu {
         this.menuMap = {};
         let anchorArray: NodeListOf<HTMLAnchorElement> = this.element.getElementsByTagName('a');
         for (let i = 0; i < anchorArray.length; i++) {
-            this.menuMap[anchorArray[i].textContent] = anchorArray[i];
+            this.menuMap[(anchorArray[i].textContent as string)] = anchorArray[i];
         }
     }
 }

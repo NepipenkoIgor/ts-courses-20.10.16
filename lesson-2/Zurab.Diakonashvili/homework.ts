@@ -10,7 +10,8 @@
  * Возвращает true, если все аргументы, кроме первого входят в первый.
  * Первым всегда должен быть массив.
  */
-function isInArray(arr: any[], ...rest: any[]): boolean {
+type snb=string|number|boolean
+function isInArray(arr: snb[], ...rest: snb[]): boolean {
     return rest.every(item => {
         return arr.indexOf(item) > 0;
     });
@@ -53,14 +54,14 @@ console.log(`'' =>`, summator()); // undefined
  * Порядок элементов результирующего массива должен совпадать с порядком,
  * в котором они встречаются в оригинальной структуре.
  */
-type arrayOfAny = any[];
-function getUnique(...arr: arrayOfAny): arrayOfAny {
+type arrayOfAny = snb[];
+function getUnique<T>(...arr: T[]): T[] {
     return arr.filter(item => {
         return !~arr.indexOf(item, arr.indexOf(item) + 1);
     });
 }
 console.log('--- getUnique ------');
-console.log('[1, 2, 3, 4, 5] =>', getUnique(1, 2, 3, 4, 5)); // 1, 2, 3, 4, 5
+console.log('[1, 2, 3, 4, 5] =>', getUnique<number>(1, 2, 3, 4, 5)); // 1, 2, 3, 4, 5
 console.log('[1, 2, 3, 4, 4] =>', getUnique(1, 2, 3, 4, 4)); // 1, 2, 3
 
 
@@ -72,7 +73,7 @@ console.log('[1, 2, 3, 4, 4] =>', getUnique(1, 2, 3, 4, 4)); // 1, 2, 3
  *    s1tar3t 2   low5a ->  t1rat3s 2   awo5l
  */
 function reverse(str: string): string {
-    function isLetter(char: string) {
+    function isLetter(char: string):boolean {
         return char.toLowerCase() !== char.toUpperCase();
     };
 

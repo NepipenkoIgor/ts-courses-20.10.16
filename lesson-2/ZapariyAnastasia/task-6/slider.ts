@@ -58,6 +58,6 @@ class Slider {
     }
 }
 
-let sliderElement = document.getElementById('slider');
+let sliderElement = document.getElementById('slider') as HTMLElement;
 
 let slider = new Slider(sliderElement);
