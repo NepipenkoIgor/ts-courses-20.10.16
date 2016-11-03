@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@types/jquery": "2.0.33",
+    "@types/lodash": "^4.14.38",
     "whatwg-fetch": "1.0.0"
   }
 }
