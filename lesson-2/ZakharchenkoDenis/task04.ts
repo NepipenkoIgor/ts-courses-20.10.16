@@ -57,6 +57,5 @@ function reverse (str:string):string {
 }
 
 let str:string = "s1tar3t 2 hellow";
-
 console.log(str); 
 console.log(reverse (str) ); 
