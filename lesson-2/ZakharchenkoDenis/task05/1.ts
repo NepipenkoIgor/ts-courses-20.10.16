@@ -93,10 +93,10 @@ class Menu implements IMenu {
 	}
 
 	// методы
-	protected generateMenu () {
+	protected generateMenu (list) {
 		console.log("..."); 
 
-	  let arr = this.list;
+	  let arr = list;
 	  let z:string = `<ul>`;
 
 	  for (let i of arr) {
@@ -112,7 +112,8 @@ class Menu implements IMenu {
 
 		// вложенные данные
 		if(i.items) {
-		  z += this.generateMenu(i.items);
+			console.log(i.items); 
+			z += this.generateMenu(i.items);
 		}
 		z += `</li>`
 	  }
