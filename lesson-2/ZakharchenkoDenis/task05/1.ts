@@ -14,46 +14,46 @@ type typeList = {title:string, items?:typeList}[];
 
 let list:typeList = [
 	{
-		title: 'Животные', items: [
+		title: "Животные", items: [
 		{
-			title: 'Млекопитающие', items: [
-			{title: 'Коровы'},
-			{title: 'Ослы'},
-			{title: 'Собаки'},
-			{title: 'Тигры'}
+			title: "Млекопитающие", items: [
+			{title: "Коровы"},
+			{title: "Ослы"},
+			{title: "Собаки"},
+			{title: "Тигры"}
 		]
 		},
 		{
-			title: 'Другие', items: [
-			{title: 'Змеи'},
-			{title: 'Птицы'},
-			{title: 'Ящерицы'},
+			title: "Другие", items: [
+			{title: "Змеи"},
+			{title: "Птицы"},
+			{title: "Ящерицы"},
 		],
 		},
 	]
 	},
 	{
-		title: 'Рыбы', items: [
+		title: "Рыбы", items: [
 		{
-			title: 'Аквариумные', items: [
-			{title: 'Гуппи'},
-			{title: 'Скалярии'}
+			title: "Аквариумные", items: [
+			{title: "Гуппи"},
+			{title: "Скалярии"}
 		]
 		},
 		{
-			title: 'Форель', items: [
-			{title: 'Морская форель'}
+			title: "Форель", items: [
+			{title: "Морская форель"}
 		]
 		},
 	]
 	},
 	{
-		title: 'Птицы', items: [
+		title: "Птицы", items: [
 		{
-			title: 'Ворон'
+			title: "Ворон"
 		},
 		{
-			title: 'Сокол'
+			title: "Сокол"
 		}
 	]
 	}
@@ -88,13 +88,13 @@ class Menu implements IMenu {
 		if (list) {
 			this.list = options.list;
 			this.navMenuList.innerHTML = this.generateMenu(this.list);
+			this.generatePanel ();
 			this.setEvent ();
 		}		
 	}
 
 	// методы
 	protected generateMenu (list) {
-		console.log("..."); 
 
 	  let arr = list;
 	  let z:string = `<ul>`;
@@ -108,11 +108,10 @@ class Menu implements IMenu {
 		  isItemsTitle = `${i.title}`;
 		}
 
-		z += `<li>${isItemsTitle}`;
+		z += `<li class="menuItem">${isItemsTitle}`;
 
 		// вложенные данные
 		if(i.items) {
-			console.log(i.items); 
 			z += this.generateMenu(i.items);
 		}
 		z += `</li>`
@@ -126,15 +125,40 @@ class Menu implements IMenu {
 		this.navMenuList.onclick = (ev:MouseEvent) => {
 			let el = <HTMLAnchorElement>ev.target;
 			let classList:DOMTokenList = el.classList;
-			if (classList.contains('title')) {
+			let panelText:HTMLInputElement = document.querySelector(".panelText");
+			
+			// очистка
+			let menuItems:NodeList = this.navMenuList.querySelectorAll(".menuItem");
+			for (let b of menuItems) {
+				let menuCurentItemClassList = b.classList;
+				if (menuCurentItemClassList.contains("active")) {
+					menuCurentItemClassList.remove("active");
+				}
+			}
+
+			if (classList.contains("title")) {
 				let parentLi:HTMLLIElement = el.parentNode;
-				parentLi.classList.toggle('menu-open');
+				parentLi.classList.toggle("menu-open");
+				parentLi.classList.add("active");
+				console.log(el.innerHTML); 
+				panelText.value = el.innerHTML;
 			}
 		};		
 	}
 
 	protected generatePanel () {
-		let rootEl = this.rootEl;
+		let navMenuList = this.navMenuList;
+		let panel =`
+		<input type="text" class="panelText">
+		<button id="toggle" type="button">Toggle</button>
+		<button id="toggle" type="button">Open</button>
+		<button id="toggle" type="button">Close</button>
+		`;
+		let div = document.createElement("div");
+		div.className = "panel";
+		div.innerHTML = panel;
+		navMenuList.insertBefore(div, navMenuList.firstChild);
+
 		// дописать генерацию кнопок
 	}  
 

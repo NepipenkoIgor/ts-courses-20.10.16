@@ -2,6 +2,7 @@
     cursor:pointer;
     list-style-type:none;
 }
+
 .menu li a {
     display:block;
     cursor:pointer;
@@ -10,6 +11,7 @@
     -webkit-user-select: none;
     user-select: none;
 }
+
 .menu li a:hover{
     color: #ff8800;
 }
@@ -39,6 +41,15 @@
 .menu ul li ul{
     display:none;
 }
+
 .menu .menu-open>ul {
     display:block;
+}
+
+.menu .active {
+    font-weight: bold;
+}
+
+.menu .active li {
+    font-weight: normal;
 }
