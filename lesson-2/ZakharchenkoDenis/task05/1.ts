@@ -72,24 +72,24 @@ interface IMenu {
 
 class Menu implements IMenu {
 	// свойства
-	protected rootEl: string;
 	protected list:typeList;
-	protected navMenuList:Element;
+	protected rootEl:Element;
+	private panelEl:HTMLDivElement;
+	private menuEl:HTMLDivElement;
 	
 	// конструктор
 	constructor (options:typeOptions) {
 		
-		this.rootEl = options.rootEl;
-		if (document.querySelector(this.rootEl)) {
-			this.navMenuList = document.querySelector(this.rootEl);
+		if (document.querySelector(options.rootEl)) {
+			this.rootEl = document.querySelector(options.rootEl);
 		} else {
-			this.navMenuList = document.body;
+			this.rootEl = document.body;
 		}
 		if (list) {
 			this.list = options.list;
-			this.navMenuList.innerHTML = this.generateMenu(this.list);
-			this.generatePanel ();
-			this.setEvent ();
+			this.generateInterface ();
+			this.setEventMenu ();
+			this.setEventPanel ();
 		}		
 	}
 
@@ -103,12 +103,10 @@ class Menu implements IMenu {
 
 		let isItemsTitle:string = "";
 		if (i.items) {
-		  isItemsTitle = `<a class="title">${i.title}</a>`;
+		  z += `<li class="menuItem"><a class="title">${i.title}</a>`;
 		} else {
-		  isItemsTitle = `${i.title}`;
+		  z += `<li><a>${i.title}</a>`;
 		}
-
-		z += `<li class="menuItem">${isItemsTitle}`;
 
 		// вложенные данные
 		if(i.items) {
@@ -121,14 +119,40 @@ class Menu implements IMenu {
 
 	}
 
-	protected setEvent () {
-		this.navMenuList.onclick = (ev:MouseEvent) => {
+	protected generatePanel () {	
+		let panel =`
+		<input type="text" class="panelText">
+		<button id="toggle" type="button">Toggle</button>
+		<button id="open" type="button">Open</button>
+		<button id="close" type="button">Close</button>
+		`;
+		return panel;	
+	} 
+
+	protected generateInterface () {
+		let rootEl = this.rootEl;
+		
+		let panel:HTMLDivElement = document.createElement("div");
+		panel.className = "panel";
+		panel.innerHTML = this.generatePanel();
+		this.panelEl = panel;
+		this.rootEl.appendChild(panel);
+
+		let menu:HTMLDivElement = document.createElement("div");
+		menu.className = "menuList";
+		menu.innerHTML = this.generateMenu(this.list);
+		this.menuEl = menu;
+		this.rootEl.appendChild(menu);
+	}
+
+	protected setEventMenu () {
+		this.menuEl.onclick = (ev:MouseEvent) => {
 			let el = <HTMLAnchorElement>ev.target;
 			let classList:DOMTokenList = el.classList;
 			let panelText:HTMLInputElement = document.querySelector(".panelText");
 			
 			// очистка
-			let menuItems:NodeList = this.navMenuList.querySelectorAll(".menuItem");
+			let menuItems:NodeList = this.rootEl.querySelectorAll(".menuItem");
 			for (let b of menuItems) {
 				let menuCurentItemClassList = b.classList;
 				if (menuCurentItemClassList.contains("active")) {
@@ -136,34 +160,43 @@ class Menu implements IMenu {
 				}
 			}
 
+			let parentLi:HTMLElement;
 			if (classList.contains("title")) {
-				let parentLi:HTMLLIElement = el.parentNode;
+				parentLi = el.parentElement;
 				parentLi.classList.toggle("menu-open");
-				parentLi.classList.add("active");
-				console.log(el.innerHTML); 
-				panelText.value = el.innerHTML;
+			} else {
+				parentLi = el.closest(".menuItem")
 			}
-		};		
+			parentLi.classList.add("active");
+			console.log(el.innerHTML); 
+			panelText.value = parentLi.firstElementChild.innerHTML;
+
+		}	
 	}
 
-	protected generatePanel () {
-		let navMenuList = this.navMenuList;
-		let panel =`
-		<input type="text" class="panelText">
-		<button id="toggle" type="button">Toggle</button>
-		<button id="toggle" type="button">Open</button>
-		<button id="toggle" type="button">Close</button>
-		`;
-		let div = document.createElement("div");
-		div.className = "panel";
-		div.innerHTML = panel;
-		navMenuList.insertBefore(div, navMenuList.firstChild);
+	protected setEventPanel () {
 
-		// дописать генерацию кнопок
-	}  
+		this.panelEl.onclick = (ev:MouseEvent) => {
+			
+			let activeEl = this.rootEl.querySelector(".active");
+
+			switch(ev.target.id) {
+			  case 'toggle':  
+				activeEl.classList.toggle("menu-open");
+				break;
+			  case 'open':  
+				activeEl.classList.add("menu-open");
+				break;
+			  case 'close': 
+				activeEl.classList.remove("menu-open");
+				break;
+			}
+
+		}
+	} 
 
 	public getElem () {
-		return this.navMenuList;
+		return this.rootEl;
 	}
 }
 
