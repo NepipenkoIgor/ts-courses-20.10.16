@@ -7,7 +7,7 @@
  // в интерфейсе реализуйте кнопками вызов этих методов ( например над меню)
  // P.S. для демонстрации
 
- // недоделано!
+ недоделаны публичные методы
 
 
 type typeList = {title:string, items?:typeList}[];
@@ -65,9 +65,9 @@ let options:typeOptions = {rootEl:".menu", list:list};
 
 interface IMenu {
 	getElem();
-	// toggle ();
-	// close ();
-	// open ();
+	toggle ();
+	close ();
+	open ();
 }
 
 class Menu implements IMenu {
@@ -198,6 +198,10 @@ class Menu implements IMenu {
 	public getElem () {
 		return this.rootEl;
 	}
+
+	// public toggle () {}
+	// public close () {}
+	// public open () {}
 }
 
 
