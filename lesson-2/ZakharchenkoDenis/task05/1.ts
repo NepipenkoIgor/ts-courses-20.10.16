@@ -7,7 +7,7 @@
  // в интерфейсе реализуйте кнопками вызов этих методов ( например над меню)
  // P.S. для демонстрации
 
- недоделаны публичные методы
+ // недоделаны публичные методы
 
 
 type typeList = {title:string, items?:typeList}[];
@@ -76,6 +76,7 @@ class Menu implements IMenu {
 	protected rootEl:Element;
 	private panelEl:HTMLDivElement;
 	private menuEl:HTMLDivElement;
+	private activeEl:Element;
 	
 	// конструктор
 	constructor (options:typeOptions) {
@@ -178,20 +179,19 @@ class Menu implements IMenu {
 
 		this.panelEl.onclick = (ev:MouseEvent) => {
 			
-			let activeEl = this.rootEl.querySelector(".active");
+			this.activeEl = this.rootEl.querySelector(".active");
 
 			switch(ev.target.id) {
 			  case 'toggle':  
-				activeEl.classList.toggle("menu-open");
+				this.toggle();
 				break;
 			  case 'open':  
-				activeEl.classList.add("menu-open");
+				this.open();
 				break;
 			  case 'close': 
-				activeEl.classList.remove("menu-open");
+				this.close();
 				break;
 			}
-
 		}
 	} 
 
@@ -199,9 +199,15 @@ class Menu implements IMenu {
 		return this.rootEl;
 	}
 
-	// public toggle () {}
-	// public close () {}
-	// public open () {}
+	public toggle () {
+		this.activeEl.classList.toggle("menu-open");
+	}
+	public close () {
+		this.activeEl.classList.remove("menu-open");
+	}
+	public open () {
+		this.activeEl.classList.add("menu-open");
+	}
 }
 
 
