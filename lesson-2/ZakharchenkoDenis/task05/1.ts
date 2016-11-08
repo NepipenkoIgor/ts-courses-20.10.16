@@ -91,7 +91,11 @@ class Menu implements IMenu {
 			this.generateInterface ();
 			this.setEventMenu ();
 			this.setEventPanel ();
-		}		
+		}	
+		if (!this.activeEl)	{
+			this.activeEl = this.rootEl.querySelector(".menuItem");
+			this.activeEl.classList.add("active");
+		}
 	}
 
 	// методы
@@ -150,7 +154,7 @@ class Menu implements IMenu {
 		this.menuEl.onclick = (ev:MouseEvent) => {
 			let el = <HTMLAnchorElement>ev.target;
 			let classList:DOMTokenList = el.classList;
-			let panelText:HTMLInputElement = document.querySelector(".panelText");
+			let panelText:Element = document.querySelector(".panelText");
 			
 			// очистка
 			let menuItems:NodeList = this.rootEl.querySelectorAll(".menuItem");
